@@ -1,0 +1,92 @@
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./style/style-auth.css">
+    <title>Privacy</title>
+</head>
+<body>
+    <header>
+        <h1>ESP32</h1>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li> <a href="#">Home</a></li>
+                    <li><a href="#">About US</a></li>
+                    <li><a href="#">ESP32 LABS</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+      <h1 class="mnsaje-b">Bienvenido al panel de administración</h1>
+      <h2 id="welcome"></h2>
+      <button id="logout" class="btn-logout">Cerrar sesión</button>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="logo-section">
+                <img src="./assets/logo.png" alt="">
+                <button class="donate-btn">DONATE NOW ↗</button>
+            </div>
+            <div class="footer-section">
+                <h2>Take Action</h2>
+                <hr>
+                <ul>
+                    <li><a href="#"></a>Oportunities</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h2>Learn</h2>
+                <hr>
+                <ul>
+                    <li><a href="#"></a>Trailheads & Maps</li>
+                    <li><a href="#"></a>History</li>
+                    <li><a href="#"></a>Ecology</li>
+                    <li><a href="#"></a>Partners</li>
+                    <li><a href="#"></a>News</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h2>NULL</h2>
+                <hr>
+                <ul>
+                    <li><a href="#"></a>NULL</li>
+                    <li><a href="#"></a>Enable</li>
+                    <li><a href="#"></a>Enable</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-botom">
+            <p>2025 RTirzo</p>
+            <p>Design by rTirzo</p>
+        </div>
+    </footer>
+   <script>
+    // validar si hay sesin activa
+    async function checkSession() {
+      const res = await fetch("/protected", { credentials: "include" });
+      if (res.ok) {
+        const user = await res.json();
+        document.getElementById("welcome").textContent = "Hola " + user.username ;
+      } else {
+        window.location.href = "/";
+      }
+    }
+
+    // logout
+    document.getElementById("logout").addEventListener("click", async () => {
+      await fetch("/logout", { method: "POST", credentials: "include" });
+      window.location.href = "/";
+    });
+
+    checkSession();
+  </script>
+</body>
+
+</html>
