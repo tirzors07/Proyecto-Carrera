@@ -70,7 +70,7 @@
    <script>
     // validar si hay sesin activa
     async function checkSession() {
-      const res = await fetch("/protected", { credentials: "include" });
+      const res = await fetch("/session", { credentials: "include" });
       if (res.ok) {
         const user = await res.json();
         document.getElementById("welcome").textContent = "Hola " + user.username ;
