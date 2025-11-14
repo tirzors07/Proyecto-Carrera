@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+/*import jwt from 'jsonwebtoken';
 import { SECRET_JWT_KEY } from '../config/config.js';
 
 export const authMiddleware = (req, res, next) => { 
@@ -11,4 +11,25 @@ export const authMiddleware = (req, res, next) => {
         req.session.user = null
     }
     next()
-}
+}*/
+import jwt from 'jsonwebtoken';
+import { SECRET_JWT_KEY } from '../config/config.js';
+
+export const authMiddleware = (req, res, next) => { 
+    const token = req.cookies['access_token']
+    console.log("cookie recibida",token);
+
+    if (!token) {
+        return res.status(401).json({ error: "Token missing" });
+    }
+
+    try {
+        const data = jwt.verify(token, SECRET_JWT_KEY);
+        console.log("token valido",data);
+        req.session.user = data; // Guardamos los datos del token
+        next();
+    } catch (error) { 
+        return res.status(403).json({ error: "Invalid or expired token" });
+    }
+    next();
+};
